@@ -1,0 +1,205 @@
+function startgame()	
+
+	t=0
+	ship={}	
+	ship.sp=2
+	ship.y=70
+	ship.x=60
+	ship.sx=0
+	ship.sy=0	
+	flamespr=5
+	bullets={}
+	bulltimer=5
+
+	--shootanim on ship	
+	muzzle=0
+	
+	score=0
+	lives=4	
+	invul=0
+	
+	stars={}
+	for i=1,100 do
+		local newstar={}
+		newstar.x =flr(rnd(128))
+		newstar.y=flr(rnd(128))
+		newstar.spd=rnd(2)+0.5		
+		add(stars,newstar)
+	end
+
+	enemies={}
+	enemiesmax=4
+	
+	mode="game"
+end
+
+function update_game()		
+	t+=1
+
+	ship.sx=0
+	ship.sy=0	
+	ship.sp=2
+	--control	
+	if btn(0) then
+		ship.sx=-2
+		ship.sy=0
+		ship.sp=1
+	end
+	if btn(1) then
+		ship.sx=2		
+		ship.sy=0
+		ship.sp=3
+	end
+	if btn(2) then
+		ship.sx=0
+		ship.sy=-2
+	end
+	if btn(3) then
+		ship.sx=0	
+		ship.sy=2		
+	end	
+	if btn(5) then
+		if bulltimer<=0 then
+			add_bullet()	
+		 muzzle=2
+			sfx(0)
+			bulltimer=3
+		end		
+	end
+	bulltimer-=1
+	
+	-- animate muzzle flash
+	if muzzle>0 then
+	 muzzle=muzzle-1
+	end
+	
+	anim_bullets()
+
+	
+	--checking edge
+	if ship.x > 116 then
+--		shipx=116
+		ship.x=3
+	elseif ship.x < 3 then
+--		shipx=3
+		ship.x=116
+	end	
+	if ship.y > 115 then
+--		shipy = 115
+		ship.y = 4
+	elseif ship.y < 4 then
+--		shipy = 4
+		ship.y = 115
+	end
+
+	--move ship
+	ship.x+=ship.sx	
+	ship.y+=ship.sy	
+
+	--movieng enemies
+	for myen in all(enemies) do
+		myen.y+=myen.speed		
+		myen.sp+=myen.speed/2	
+		if myen.sp>=25 then
+			myen.sp=21
+		end		
+		if myen.y > 130 then
+			del(enemies,myen)
+		end
+	end	
+	
+	--collision enemie x bullets
+	for myen in all(enemies) do
+		for mybul in all(bullets) do
+			if col(myen, mybul) then
+				del(bullets, mybul)
+				myen.hp-=1
+				sfx(3)
+				myen.flash=2
+				if myen.hp<=0 then
+					del(enemies, myen)
+					score+=100
+					sfx(2)
+					explode(myen.x+4,myen.y+4)
+				end				
+			end
+		end
+	end
+		
+	
+	--collision ship x enemies
+	if invul<=0 then
+		for myen in all(enemies) do
+			if col(myen, ship) then
+				lives-=1
+				sfx(1)
+				invul=60
+				--del(enemies, myen)
+				if lives<=0 then
+					mode="over"
+				end
+			end
+		end
+	else
+		invul-=1
+	end
+
+
+
+	--anim flame
+	flamespr=flamespr+1
+	if flamespr>8 then
+		flamespr=5
+	end
+
+	move_bullets()
+
+	animatestars()
+	
+	spawnenemies()
+end
+
+
+--drawing every frame (30 fps)
+function draw_game()	
+	cls(0)	
+	draw_starfield()
+	if invul<=0 then
+		spr(flamespr,ship.x,ship.y+7)	
+		spr(ship.sp,ship.x,ship.y)	
+		t=0
+	else -- ship is shootet
+		if sin(t/5)<0.2 then
+			spr(flamespr,ship.x,ship.y+7)	
+			spr(ship.sp,ship.x,ship.y)	
+		end
+	end
+	
+	for myen in all(enemies) do
+		if myen.flash>0 then
+			myen.flash-=1
+			flashspr()
+		end
+		drwspr(myen)	
+		pal()--reset default colers
+	end	
+	drwallspr(bullets)	
+	
+	--draw muzzle
+	if muzzle>0 then
+ 		circfill(ship.x+3,ship.y-4,muzzle,7)
+ 	end
+
+	--draw eyplosion
+	draw_explosion()
+		
+	--metainfo
+	print("score:"..score,90,1,7)		
+	for i=1,4 do
+		if lives>=i then
+			spr(10,i*9-8,1)
+		else
+				spr(9,i*9-8,1)
+		end
+	end
+end
