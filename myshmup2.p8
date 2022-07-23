@@ -3,8 +3,9 @@ version 36
 __lua__
 --todo:
 --show points on gameover
---explosion
---
+--pixels when hitting enemy
+--pixel explosion for asteroids
+--player explodes
 
 function _init()		
 	mode="start"
@@ -12,12 +13,11 @@ function _init()
 	levelt=0
 	entype=1
 	wave=1
-	explodes={}
+	parts={}
 end
 
 --drawing every frame (30 fps)
-function _draw()	
-	
+function _draw()		
 	if mode=="game" then
 		draw_game()
 	elseif mode=="start" then
@@ -47,23 +47,15 @@ end
 function startgame()	
 
 	t=0
-
-	ship={}
-	
+	ship={}	
 	ship.sp=2
 	ship.y=70
 	ship.x=60
 	ship.sx=0
-	ship.sy=0
-
---	sspeedx=0
---	sspeedy=0
-	
+	ship.sy=0	
 	flamespr=5
-	
-	
 	bullets={}
-	bulltimer=30
+	bulltimer=5
 
 	--shootanim on ship	
 	muzzle=0
@@ -164,11 +156,30 @@ function col(a,b)
 end
 
 function explode(expx,expy)
-	local myex={}
-	myex.x=expx
-	myex.y=expy
-	add(explodes,myex)
 
+	local myp={}
+	myp.x=expx
+	myp.y=expy
+	myp.xs=0
+	myp.ys=0
+	myp.maxage=10
+	myp.c=7
+	myp.size=6
+	myp.first=true
+	add(parts,myp)
+
+	for i=0,10 do
+		local myp={}
+		myp.first=false
+		myp.x=expx
+		myp.y=expy
+		myp.xs=(rnd()-0.5)*2
+		myp.ys=(rnd()-0.5)*2
+		myp.maxage=20+rnd(20)
+		myp.c=7
+		myp.size=3
+		add(parts,myp)
+	end
 end
 -->8
 --bullets
@@ -291,7 +302,7 @@ function update_game()
 					del(enemies, myen)
 					score+=100
 					sfx(2)
-					explode(myen.x,myen.y)
+					explode(myen.x+4,myen.y+4)
 				end				
 			end
 		end
@@ -381,13 +392,16 @@ function draw_game()
 	end	
 	drwallspr(bullets)	
 	
+	--draw muzzle
 	if muzzle>0 then
- 	circfill(ship.x+3,ship.y-4,muzzle,7)
- end
+ 		circfill(ship.x+3,ship.y-4,muzzle,7)
+ 	end
 
-	print("score:"..score,90,1,7)
-	
-
+	--draw eyplosion
+	draw_explosion()
+		
+	--metainfo
+	print("score:"..score,90,1,7)		
 	for i=1,4 do
 		if lives>=i then
 			spr(10,i*9-8,1)
@@ -398,8 +412,8 @@ function draw_game()
 end
 
 function draw_start()
-	cls(1)
-	print("my awesome smup",34,40,12)
+	cls(0)
+	print("space madness !",34,40,7)
 	print("press any key to start",20,70,blink())
 end
 
@@ -432,6 +446,37 @@ function flashspr()
 				pal(6,7)
 				pal(1,7)
 			end
+end
+
+function draw_explosion()
+	for part in all(parts) do
+		--pset(part.x,part.y,part.c)
+		if part.first==false then
+			if part.maxage<30 then
+				part.c = 6		 
+				part.size-=0.5	
+			elseif part.maxage<15 then
+				part.c = 5
+			elseif part.maxage<5 then
+				part.size-=0.5		
+			end
+		else 
+			part.size-=1
+		end
+		
+		circfill(part.x,part.y,part.size,part.c)		
+		--move
+	 part.x+=part.xs
+	 part.y+=part.ys
+
+		part.sx=part.xs*0.8
+		part.sy=part.ys*0.8
+	 
+	 part.maxage-=1
+		if part.size<=0 then
+			del(parts,part)
+		end
+	end
 end
 __gfx__
 00000000000550000005500000055000000000000000000000000000000000000000000006600660066006600550000000000000000000000000000000000000
@@ -482,7 +527,7 @@ __gfx__
 05050550505550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 00505555555500000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 __sfx__
-000100003d550365502f54027540215301d530155300f53009520065200352002520015200052000500005000050000500005000150001500015000050000500005000050023500285002c500005000050000500
+000100003d530365302f52027520215201d520155200f52009520065100351002510015100051000500005000050000500005000150001500015000050000500005000050023500285002c500005000050000500
 000500001563012630106300f6300c6300a6300962008620076200762007620076200661004610026100161000600046000f6001160013600156001a600246002860000000000000000000000000000000000000
 00010000350502f05029640186200b6100a6100761005610046100261003650016000260003600006500160000600016501920003600036000265003600036000360000200002000020000200002000020000200
 000100002f55029550000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
