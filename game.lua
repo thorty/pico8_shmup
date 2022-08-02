@@ -10,7 +10,8 @@ function startgame()
 	flamespr=5
 	bullets={}
 	bulltimer=5
-
+	parts={}
+	gameovertime=30
 	--shootanim on ship	
 	muzzle=0
 	
@@ -115,7 +116,7 @@ function update_game()
 				del(bullets, mybul)
 				myen.hp-=1
 				sfx(3)
-				myen.flash=2
+				myen.flash=5
 				if myen.hp<=0 then
 					del(enemies, myen)
 					score+=100
@@ -136,7 +137,7 @@ function update_game()
 				invul=60
 				--del(enemies, myen)
 				if lives<=0 then
-					mode="over"
+					explode(ship.x+4,ship.y+4, true)
 				end
 			end
 		end
@@ -144,12 +145,20 @@ function update_game()
 		invul-=1
 	end
 
-
+	--time for gameoveranimation
+	if lives <=0 then
+		gameovertime-=1
+		if gameovertime<=0 then
+			mode="over"
+		end
+	end
 
 	--anim flame
-	flamespr=flamespr+1
-	if flamespr>8 then
-		flamespr=5
+	if lives<=0 then
+		flamespr=flamespr+1
+		if flamespr>8 then
+			flamespr=5
+		end
 	end
 
 	move_bullets()

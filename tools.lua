@@ -72,6 +72,57 @@ function flashspr()
 			end
 end
 
+
+function explode(expx,expy,isbossmode)
+	if isbossmode then
+		local myp={}
+		myp.x=expx
+		myp.y=expy
+		myp.xs=0
+		myp.ys=0
+		myp.maxage=10
+		myp.c=7
+		myp.size=20
+		myp.first=true
+		add(parts,myp)
+		for i=0,40 do
+			local myp={}
+			myp.first=false
+			myp.x=expx
+			myp.y=expy
+			myp.xs=(rnd()-0.5)*4
+			myp.ys=(rnd()-0.5)*4
+			myp.maxage=25+rnd(20)
+			myp.c=7
+			myp.size=10
+			add(parts,myp)
+		end
+	else
+		local myp={}
+		myp.x=expx
+		myp.y=expy
+		myp.xs=0
+		myp.ys=0
+		myp.maxage=10
+		myp.c=7
+		myp.size=6
+		myp.first=true
+		add(parts,myp)
+		for i=0,10 do
+			local myp={}
+			myp.first=false
+			myp.x=expx
+			myp.y=expy
+			myp.xs=(rnd()-0.5)*2
+			myp.ys=(rnd()-0.5)*2
+			myp.maxage=20+rnd(20)
+			myp.c=7
+			myp.size=3
+			add(parts,myp)
+		end
+	end
+end
+
 function draw_explosion()
 	for part in all(parts) do
 		--pset(part.x,part.y,part.c)

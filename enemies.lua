@@ -16,30 +16,3 @@ end
 
 
 
-
-function explode(expx,expy)
-
-	local myp={}
-	myp.x=expx
-	myp.y=expy
-	myp.xs=0
-	myp.ys=0
-	myp.maxage=10
-	myp.c=7
-	myp.size=6
-	myp.first=true
-	add(parts,myp)
-
-	for i=0,10 do
-		local myp={}
-		myp.first=false
-		myp.x=expx
-		myp.y=expy
-		myp.xs=(rnd()-0.5)*2
-		myp.ys=(rnd()-0.5)*2
-		myp.maxage=20+rnd(20)
-		myp.c=7
-		myp.size=3
-		add(parts,myp)
-	end
-end
