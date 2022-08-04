@@ -86,14 +86,14 @@ function explode(expx,expy,isbossmode)
 		myp.size=20
 		myp.first=true
 		add(parts,myp)
-		for i=0,40 do
+		for i=0,50 do
 			local myp={}
 			myp.first=false
 			myp.x=expx
 			myp.y=expy
 			myp.xs=(rnd()-0.5)*4
 			myp.ys=(rnd()-0.5)*4
-			myp.maxage=25+rnd(20)
+			myp.maxage=35+rnd(20)
 			myp.c=7
 			myp.size=10
 			add(parts,myp)
