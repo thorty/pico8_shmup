@@ -141,6 +141,9 @@ function update_game()
 				--del(enemies, myen)
 				if lives<=0 then
 					explode(ship.x+4,ship.y+4, true)
+				else
+					explode(ship.x+4,ship.y+4, false)
+					
 				end
 			end
 		end
