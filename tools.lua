@@ -75,6 +75,7 @@ end
 
 function explode(expx,expy,isbossmode)
 	if isbossmode then
+		-- boxx explosion
 		local myp={}
 		myp.x=expx
 		myp.y=expy
@@ -98,6 +99,7 @@ function explode(expx,expy,isbossmode)
 			add(parts,myp)
 		end
 	else
+		-- enemyexplosion
 		local myp={}
 		myp.x=expx
 		myp.y=expy
@@ -120,7 +122,9 @@ function explode(expx,expy,isbossmode)
 			myp.size=3
 			add(parts,myp)
 		end
+		create_pixelexplosion(expx,expy)
 	end
+	create_bigshwave(expx,expy)
 end
 
 function draw_explosion()
@@ -138,18 +142,90 @@ function draw_explosion()
 		else 
 			part.size-=1
 		end
-		
-		circfill(part.x,part.y,part.size,part.c)		
+		if part.spark then
+			pset(part.x,part.y,7)
+		else
+			circfill(part.x,part.y,part.size,part.c)		
+		end
 		--move
-	    part.x+=part.xs
-	    part.y+=part.ys
+		if part.spark and part.maxage<=20 then
+			--do not move them
+		else 
+	    	part.x+=part.xs
+	    	part.y+=part.ys
 
-		part.sx=part.xs*0.8
-		part.sy=part.ys*0.8
-	 
-	    part.maxage-=1
-		if part.size<=0 then
+			part.sx=part.xs*0.8
+			part.sy=part.ys*0.8
+		end
+		part.maxage-=1
+		if part.size<=0 and not part.spark then
+			del(parts,part)
+		elseif part.spark and part.maxage <=15 then
 			del(parts,part)
 		end
+	end
+end
+
+function  create_shwave(x,y)
+	local mysw={}
+	mysw.x=x
+	mysw.y=y
+	mysw.r=3
+	mysw.tr=4
+	mysw.speed=2
+	add(shwaves,mysw)
+end
+
+function  create_bigshwave(x,y)
+	local mysw={}
+	mysw.x=x
+	mysw.y=y
+	mysw.r=5
+	mysw.tr=25
+	mysw.speed=3.5
+	add(shwaves,mysw)
+end
+
+function draw_shwaves()
+	for mysw in all(shwaves) do
+		circ(mysw.x,mysw.y,mysw.r, 7)
+		mysw.r+=mysw.speed
+		if mysw.r >mysw.tr then
+			del(shwaves,mysw)
+		end
+	end
+end
+
+function create_pixelexplosion(expx,expy)
+	for i=0,12 do
+		local myp={}
+		myp.first=false
+		myp.x=expx
+		myp.y=expy
+		myp.xs=(rnd()-0.5)*6
+		myp.ys=(rnd()-0.5)*6
+		myp.maxage=30
+		myp.c=7
+		myp.size=3
+		myp.spark=true
+		add(parts,myp)
+	end
+end
+
+
+function create_hitpixel(expx,expy)
+	hitpixels = rnd(3)+1
+	for i=0,hitpixels do
+		local myp={}
+		myp.first=false
+		myp.x=expx
+		myp.y=expy
+		myp.xs=(rnd()-0.5)*4
+		myp.ys=(rnd()-1)*2
+		myp.maxage=28
+		myp.c=7
+		myp.size=3
+		myp.spark=true
+		add(parts,myp)
 	end
 end

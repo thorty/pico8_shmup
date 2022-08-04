@@ -9,6 +9,7 @@ function startgame()
 	ship.sy=0	
 	flamespr=5
 	bullets={}
+	shwaves={}
 	bulltimer=5
 	parts={}
 	gameovertime=30
@@ -114,6 +115,8 @@ function update_game()
 		for mybul in all(bullets) do
 			if col(myen, mybul) then
 				del(bullets, mybul)
+				--create_shwave(mybul.x+4,mybul.y+4)
+				create_hitpixel(myen.x+4,myen.y+4)
 				myen.hp-=1
 				sfx(3)
 				myen.flash=5
@@ -198,6 +201,10 @@ function draw_game()
 	if muzzle>0 then
  		circfill(ship.x+3,ship.y-4,muzzle,7)
  	end
+
+
+	--drawing shwaves 
+	draw_shwaves()
 
 	--draw eyplosion
 	draw_explosion()
