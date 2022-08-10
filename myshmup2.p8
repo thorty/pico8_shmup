@@ -9,10 +9,11 @@ __lua__
 #include bullets.lua
 
 --todo:
---show points on gameover
---pixels when hitting enemy
---pixel explosion for asteroids
---player explodes
+-- nicer screens
+-- multiple ebemies
+-- big enemies
+-- enemie bullets
+-- music
 
 __gfx__
 00000000000550000005500000055000000000000000000000000000000000000000000006600660066006600550000000000000000000000000000000000000

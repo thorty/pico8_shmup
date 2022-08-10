@@ -43,11 +43,15 @@ function startnewwave()
 end
 
 function update_over()	
-	screentime-=1
-	if screentime <=0 then
+
+	if btn(4)==false and btn(5)==false then
+		btnreleased=true
+	end
+	if btnreleased then
 		if btnp(4) or btnp(5) then
 			startgame()
 			mode="start"
+			btnreleased=false
 		end
 	end
 end
@@ -61,11 +65,14 @@ end
 
 
 function update_won()	
-	screentime-=1
-	if screentime <=0 then
+	if btn(4)==false and btn(5)==false then
+		btnreleased=true
+	end
+	if btnreleased then
 		if btnp(4) or btnp(5) then
 			startgame()
 			mode="start"
+			btnreleased=false
 		end
 	end
 end
@@ -73,7 +80,8 @@ end
 
 function draw_won()
 	cls(0)
-	print("congrats. you defeat human race!",10,40,8)
-	print("your score: "..score,15,50,8)
-	print("press any key to continue",16,70,blink())
+	print("congrats!",40,40,3) 
+	print("humans are save.",25,50,5)
+	print("your score: "..score,24,70,8)
+	print("press any key to continue",16,90,blink())
 end

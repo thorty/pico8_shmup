@@ -1,7 +1,6 @@
 function startgame()	
 
 	t=0
-	screentime=60
 	ship={}	
 	ship.sp=2
 	ship.y=70
