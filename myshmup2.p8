@@ -2,9 +2,8 @@ pico-8 cartridge // http://www.pico-8.com
 version 36
 __lua__
 #include main.lua
-#include start.lua
 #include game.lua
-#include over.lua
+#include gamescreens.lua
 #include tools.lua
 #include enemies.lua
 #include bullets.lua

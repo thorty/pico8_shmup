@@ -20,6 +20,9 @@ function _draw()
 	elseif mode=="over" then
 		-- game over
 		draw_over()
+	elseif mode=="won" then
+		-- game over
+		draw_won()	
 	end		
 end
 
@@ -33,5 +36,7 @@ function _update()
 		update_levelscreen()		
 	elseif mode=="over" then		
 		update_over()		
+	elseif mode=="won" then		
+		update_won()		
 	end
 end

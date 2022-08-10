@@ -1,6 +1,7 @@
 function startgame()	
 
 	t=0
+	screentime=60
 	ship={}	
 	ship.sp=2
 	ship.y=70
@@ -16,9 +17,11 @@ function startgame()
 	--shootanim on ship	
 	muzzle=0
 	
+	wave=0
 	score=0
-	lives=4	
+	lives=2	
 	invul=0
+
 	
 	stars={}
 	for i=1,100 do
@@ -29,10 +32,8 @@ function startgame()
 		add(stars,newstar)
 	end
 
-	enemies={}
-	enemiesmax=4
+
 	
-	mode="game"
 end
 
 function update_game()		
@@ -60,6 +61,7 @@ function update_game()
 		ship.sx=0	
 		ship.sy=2		
 	end	
+	
 	if btn(5) then
 		if bulltimer<=0 then
 			add_bullet()	
@@ -125,6 +127,11 @@ function update_game()
 					score+=100
 					sfx(2)
 					explode(myen.x+4,myen.y+4)
+
+					if #enemies <=0 then
+						startnewwave()
+					end
+
 				end				
 			end
 		end
@@ -151,7 +158,15 @@ function update_game()
 		invul-=1
 	end
 
-	--time for gameoveranimation
+	-- check if enemy is out of screen then respawn
+	for myen in all(enemies) do
+		if myen.y>115 then
+			myen.y=-4
+		end
+	end
+
+
+	--time befor gameoveranimation
 	if lives <=0 then
 		gameovertime-=1
 		if gameovertime<=0 then
@@ -171,7 +186,6 @@ function update_game()
 
 	animatestars()
 	
-	spawnenemies()
 end
 
 
@@ -213,12 +227,12 @@ function draw_game()
 	draw_explosion()
 		
 	--metainfo
-	print("score:"..score,90,1,7)		
+	print("score:"..score,85,1,7)		
 	for i=1,4 do
 		if lives>=i then
 			spr(10,i*9-8,1)
 		else
-				spr(9,i*9-8,1)
+			spr(9,i*9-8,1)
 		end
 	end
 end

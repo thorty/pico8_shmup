@@ -27,7 +27,8 @@ end
 
 
 function blink()
-	blinka = {5,5,5,5,5,5,5,6,6,6,7,7,7}
+	blinka = {5,5,5,5,5,5,5,6,6,6,6,6,6,7,7,7,7,7,7}
+	blinkt+=1
 	if blinkt>#blinka then
 		blinkt = 1
 	end
@@ -160,7 +161,7 @@ function draw_explosion()
 		part.maxage-=1
 		if part.size<=0 and not part.spark then
 			del(parts,part)
-		elseif part.spark and part.maxage <=15 then
+		elseif part.spark and part.maxage <=18 then
 			del(parts,part)
 		end
 	end
