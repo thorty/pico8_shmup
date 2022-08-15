@@ -16,7 +16,7 @@ function startgame()
 	--shootanim on ship	
 	muzzle=0
 	
-	wave=0
+	wave=1
 	score=0
 	lives=2	
 	invul=0
@@ -31,7 +31,7 @@ function startgame()
 		add(stars,newstar)
 	end
 
-
+	
 	
 end
 
@@ -167,10 +167,11 @@ function update_game()
 
 	--time befor gameoveranimation
 	if lives <=0 then
-		gameovertime-=1
-		if gameovertime<=0 then
+		--gameoverti me-=1
+		--if gameovertime<=0 then
 			mode="over"
-		end
+			sfx(4)
+		--end
 	end
 
 	--anim flame
@@ -192,17 +193,18 @@ end
 function draw_game()	
 	cls(0)	
 	draw_starfield()
-	if invul<=0 then
-		spr(flamespr,ship.x,ship.y+7)	
-		spr(ship.sp,ship.x,ship.y)	
-		t=0
-	else -- ship is shootet
-		if sin(t/5)<0.2 then
+	if lives > 0 then
+		if invul<=0 then
 			spr(flamespr,ship.x,ship.y+7)	
 			spr(ship.sp,ship.x,ship.y)	
+			t=0
+		else -- ship is shootet
+			if sin(t/5)<0.2 then
+				spr(flamespr,ship.x,ship.y+7)	
+				spr(ship.sp,ship.x,ship.y)	
+			end
 		end
 	end
-	
 	for myen in all(enemies) do
 		if myen.flash>0 then
 			myen.flash-=1

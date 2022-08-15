@@ -1,6 +1,7 @@
 
 function _init()		
 	mode="start"
+	music(0)
 	blinkt=0
 	levelt=0
 	entype=1
@@ -16,7 +17,8 @@ function _draw()
 		-- star screen
 		draw_start()
 	elseif mode=="levelscreen" then		
-		draw_levelscreen()		
+		draw_levelscreen()
+		music(-1,1000)		
 	elseif mode=="over" then
 		-- game over
 		draw_over()

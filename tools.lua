@@ -230,3 +230,14 @@ function create_hitpixel(expx,expy)
 		add(parts,myp)
 	end
 end
+
+function get_center(text)
+	center= 64 - #text*2	
+	--printh(#text ..center)
+	return center
+	
+end
+
+function print_center(text, y, c)
+	print(text, get_center(text), y, c)
+end

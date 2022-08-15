@@ -9,12 +9,12 @@ end
 
 function draw_start()
 	cls(0)
-	print("enemys atacking human spacestation. ",22,20,7)
-	print("Yyu are the last defender of human live. ",18,30,7)
-	print("now Fight. warrior!",34,40,7)-- our radar system recognizes 9 waves and one mothership
-	print("this is truely....",34,50,7)
-	print("space madness !",36,60,7)
-	print("press any key to start",20,80,blink())
+	--print_center("enemys atacking human spacestation. ",20,7)
+	--print_center("you are the last defender of human live. ",30,7)
+	-- our radar system recognizes 9 waves and one mothership
+	--print_center("this truely is....",50,7)
+	print_center("space madness",20,7)
+	print_center("press any key to start",80,blink())
 end
 
 function update_levelscreen()
@@ -31,7 +31,8 @@ end
 function draw_levelscreen()
 	cls(0)
 	draw_game()
-	print("wave "..wave,"51","50",blink())
+	local text = "wave "..wave
+	print(text, get_center(text),"50",blink())
 end
 	
 function startnewwave()
@@ -58,9 +59,14 @@ end
 
 
 function draw_over()
-	cls(0)
-	print("game over",45,40,8)
-	print("press any key to continue",16,70,blink())
+	draw_game()
+	if btn(4)==false and btn(5)==false then
+		btnreleased=true
+	end
+	if btnreleased then
+		print("game over",45,40,8)
+		print("press any key to try again",16,70,blink())
+	end
 end
 
 
