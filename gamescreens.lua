@@ -29,7 +29,6 @@ function update_levelscreen()
 end
 
 function draw_levelscreen()
-	cls(0)
 	draw_game()
 	local text = "wave "..wave
 	print(text, get_center(text),"50",blink())
@@ -85,9 +84,9 @@ end
 
 
 function draw_won()
-	cls(0)
-	print("congrats!",40,40,3) 
-	print("humans are save.",25,50,5)
-	print("your score: "..score,24,70,8)
-	print("press any key to continue",16,90,blink())
+	draw_game()
+	print_center("congratulation",30,12)
+	print_center("- you beat it! -",40,12) 
+	print_center("score: "..score,70,8)
+	print_center("press any key to continue",90,blink())
 end
