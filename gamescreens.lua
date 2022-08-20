@@ -37,7 +37,7 @@ end
 function startnewwave()
 	wave+=1
 	mode="levelscreen"
-	if wave >= 3 then
+	if wave > 5 then
 		mode="won"
 	end
 end
@@ -86,7 +86,7 @@ end
 function draw_won()
 	draw_game()
 	print_center("congratulation",30,12)
-	print_center("- you beat it! -",40,12) 
+	print_center("-- you beat it! --",40,12) 
 	print_center("score: "..score,70,8)
 	print_center("press any key to continue",90,blink())
 end

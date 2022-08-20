@@ -44,6 +44,8 @@ function col(a,b)
 	b_top=b.y
 	b_right=b.x+7 
 	b_bottom=b.y+7	
+
+	
 	
 	if a_top>b_bottom then return false end
 	if b_top>a_bottom then return false end
@@ -62,7 +64,7 @@ function drwallspr(sprs)
 end
 
 function drwspr(sp)	
-		spr(sp.sp,sp.x,sp.y)
+		spr(sp.sp,sp.x,sp.y,sp.spw,sp.sph)
 end
 
 function flashspr()
