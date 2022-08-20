@@ -2,8 +2,7 @@
 function spawnwave()	
 	enemies={}
 	enemiesmax=4
-	printh("wave.."..wave)
-	wave=5
+--	wave=5
 	if wave==1 then
 		spawnen(1)
 	elseif wave==2 then

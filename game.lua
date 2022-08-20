@@ -1,5 +1,5 @@
 function startgame()	
-
+	music(1)
 	t=0
 	ship={}	
 	ship.sp=2
@@ -173,6 +173,7 @@ function update_game()
 		--gameoverti me-=1
 		--if gameovertime<=0 then
 			mode="over"
+			music(-1)
 			sfx(4)
 		--end
 	end

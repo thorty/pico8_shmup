@@ -2,6 +2,7 @@
 function update_start()	
 	blinkt = blinkt+1
 	if btnp(4) or btnp(5) then
+		sfx(14,-1,0,15)
 		mode="levelscreen"
 		startgame()
 	end
@@ -20,11 +21,12 @@ end
 function update_levelscreen()
 	levelt=levelt+1
 	update_game()
-	if levelt>60 then
+	if levelt>60 then			
 		levelt=0
 		bullets={}
 		mode="game"
-		spawnwave()	
+		spawnwave()
+			
 	end
 end
 
@@ -35,21 +37,25 @@ function draw_levelscreen()
 end
 	
 function startnewwave()
+	if wave <= 5 then
+		sfx(14,-1,0,15)
+	end
 	wave+=1
 	mode="levelscreen"
 	if wave > 5 then
 		mode="won"
+		--music(-1)
 	end
 end
 
-function update_over()	
-
+function update_over()		
 	if btn(4)==false and btn(5)==false then
 		btnreleased=true
 	end
 	if btnreleased then
 		if btnp(4) or btnp(5) then
 			startgame()
+			_init()
 			mode="start"
 			btnreleased=false
 		end

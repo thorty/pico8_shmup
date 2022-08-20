@@ -17,8 +17,7 @@ function _draw()
 		-- star screen
 		draw_start()
 	elseif mode=="levelscreen" then		
-		draw_levelscreen()
-		music(-1,1000)		
+		draw_levelscreen()				
 	elseif mode=="over" then
 		-- game over
 		draw_over()
