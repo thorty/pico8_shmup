@@ -1,6 +1,5 @@
 --add enemies and random place
-function spawnwave()	
-	enemies={}
+function spawnwave()		
 	enemiesmax=4
 --	wave=5
 	if wave==1 then
@@ -21,9 +20,7 @@ end
 
 --add enemies and random place
 function spawnen(entype)	
-	
-	enemies={}
-	
+		
 	for i=1,enemiesmax do
 		if #enemies < enemiesmax then
 			printh("spawn: "..i .."-"..enemiesmax)
