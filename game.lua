@@ -1,7 +1,7 @@
 function startgame()	
-
+	music(1)
 	t=0
-	ship={}	
+	ship=make_spr()	
 	ship.sp=2
 	ship.y=70
 	ship.x=60
@@ -14,12 +14,13 @@ function startgame()
 	parts={}
 	gameovertime=30
 	--shootanim on ship	
-	muzzle=0
+	muzzle=4
 	
-	wave=1
+	wave=4
 	score=0
 	lives=2	
 	invul=0
+
 
 	
 	stars={}
@@ -35,9 +36,7 @@ function startgame()
 	
 end
 
-function update_game()		
-	t+=1
-
+function update_game()			
 	ship.sx=0
 	ship.sy=0	
 	ship.sp=2
@@ -64,7 +63,7 @@ function update_game()
 	if btn(5) then
 		if bulltimer<=0 then
 			add_bullet()	
-		 muzzle=2
+		 muzzle=4
 			sfx(0)
 			bulltimer=3
 		end		
@@ -129,11 +128,6 @@ function update_game()
 					score+=100
 					sfx(2)
 					explode(myen.x+4,myen.y+4)
-
-					if #enemies <=0 then
-						startnewwave()
-					end
-
 				end				
 			end
 		end
@@ -161,20 +155,26 @@ function update_game()
 	end
 
 	-- check if enemy is out of screen then respawn
+	--for myen in all(enemies) do
+	--	if myen.y>115 then
+	--		myen.y=-4
+	--	end
+	--end
+
+-- check if enemy is out of screen then delete
 	for myen in all(enemies) do
 		if myen.y>115 then
-			myen.y=-4
+			score-=100
+			del(enemies,myen)
 		end
 	end
 
-
 	--time befor gameoveranimation
 	if lives <=0 then
-		--gameoverti me-=1
-		--if gameovertime<=0 then
-			mode="over"
-			sfx(4)
-		--end
+		mode="over"
+		music(-1)
+		sfx(4)
+		lockout=t+40
 	end
 
 	--anim flame
@@ -189,6 +189,12 @@ function update_game()
 
 	animatestars()
 	
+
+	if mode=="game" and #enemies <=0 then
+		startnewwave()
+	end
+
+
 end
 
 
@@ -200,7 +206,6 @@ function draw_game()
 		if invul<=0 then
 			spr(flamespr,ship.x,ship.y+7)	
 			spr(ship.sp,ship.x,ship.y)	
-			t=0
 		else -- ship is shootet
 			if sin(t/5)<0.2 then
 				spr(flamespr,ship.x,ship.y+7)	
@@ -221,6 +226,7 @@ function draw_game()
 	--draw muzzle
 	if muzzle>0 then
  		circfill(ship.x+3,ship.y-4,muzzle,7)
+		circfill(ship.x+4,ship.y-4,muzzle,7)
  	end
 
 

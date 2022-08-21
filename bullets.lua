@@ -1,10 +1,11 @@
 function add_bullet()
-	local bul={
-			x=ship.x,
-			y=ship.y-2,
-			sp=16		
-		}
-	 add(bullets, bul)	
+	local bul=make_spr()
+	bul.x=ship.x+1.5
+	bul.y=ship.y-4
+	bul.sp=34			
+	bul.colw=5
+	bul.ani={34}
+	add(bullets, bul)	
 end
 
 function move_bullets()
@@ -19,10 +20,10 @@ end
 function anim_bullets()
 	for i=1,#bullets do
 		local bu = bullets[i] 
-		bu.sp+=1
-		if bu.sp>=19 then
-			bu.sp=16
+		bu.aniframe+=1	
+		if flr(bu.aniframe)>#bu.ani then
+			bu.aniframe=1
 		end
-		bullets[i].sp=bu.sp
+		bu.sp=bu.ani[flr(bu.aniframe)]	
 	end
 end

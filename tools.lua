@@ -38,15 +38,13 @@ end
 function col(a,b) 
 	a_left=a.x
 	a_top=a.y
-	a_right=a.x+7 
-	a_bottom=a.y+7
+	a_right=a.x+a.colw-1 
+	a_bottom=a.y+a.colh-1 
 	b_left=b.x
 	b_top=b.y
-	b_right=b.x+7 
-	b_bottom=b.y+7	
+	b_right=b.x+b.colw-1 
+	b_bottom=b.y+b.colh-1 	
 
-	
-	
 	if a_top>b_bottom then return false end
 	if b_top>a_bottom then return false end
 	if a_left>b_right then return false end
@@ -242,4 +240,19 @@ end
 
 function print_center(text, y, c)
 	print(text, get_center(text), y, c)
+end
+
+function make_spr()
+	local myspr={}	
+	myspr.sp=0		
+	myspr.flash=0
+	myspr.x=0
+	myspr.y=0
+	myspr.speed=rnd(1)+0.5
+	myspr.aniframe=1
+	myspr.spw=1
+	myspr.sph=1
+	myspr.colw=8
+	myspr.colh=8
+	return myspr
 end
