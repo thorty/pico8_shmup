@@ -7,7 +7,7 @@ function _init()
 	entype=1
 	wave=1
 	parts={}
-	lastwave=1
+	lastwave=5
 	enemies={}
 	t=0
 	--for handling button mashing between screens

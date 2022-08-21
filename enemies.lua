@@ -22,9 +22,8 @@ end
 function spawnen(entype)	
 		
 	for i=1,enemiesmax do
-		if #enemies < enemiesmax then
-			printh("spawn: "..i .."-"..enemiesmax)
-			local myen={}
+		if #enemies < enemiesmax then		
+			local myen=make_spr()
 			myen.hp=2
 			myen.flash=0
 			myen.x=rnd(120)	
@@ -54,11 +53,13 @@ function spawnen(entype)
 				myen.sp=48
 				myen.ani={48,49,50,51}
 			elseif entype==5 then	
-				myen.spw=4
-				myen.sph=4
+				myen.spw=2
+				myen.sph=2
 				myen.hp=64
-				myen.sp=48
-				myen.ani={64,68,72,76}
+				myen.sp=130
+				myen.ani={130,132,134}
+				myen.colw=16
+				myen.colh=16
 			end
 			add(enemies,myen)
 		end

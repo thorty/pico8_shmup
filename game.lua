@@ -1,7 +1,7 @@
 function startgame()	
 	music(1)
 	t=0
-	ship={}	
+	ship=make_spr()	
 	ship.sp=2
 	ship.y=70
 	ship.x=60
@@ -14,9 +14,9 @@ function startgame()
 	parts={}
 	gameovertime=30
 	--shootanim on ship	
-	muzzle=0
+	muzzle=4
 	
-	wave=1
+	wave=4
 	score=0
 	lives=2	
 	invul=0
@@ -63,7 +63,7 @@ function update_game()
 	if btn(5) then
 		if bulltimer<=0 then
 			add_bullet()	
-		 muzzle=2
+		 muzzle=4
 			sfx(0)
 			bulltimer=3
 		end		
@@ -226,6 +226,7 @@ function draw_game()
 	--draw muzzle
 	if muzzle>0 then
  		circfill(ship.x+3,ship.y-4,muzzle,7)
+		circfill(ship.x+4,ship.y-4,muzzle,7)
  	end
 
 
