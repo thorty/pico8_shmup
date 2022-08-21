@@ -44,11 +44,15 @@ function startnewwave()
 	elseif wave > lastwave then
 		--music(-1)
 		music(2)
-		mode="won"		
+		mode="won"
+		lockout=t+40		
 	end
 end
 
-function update_over()		
+function update_over()
+	if	t<lockout then
+		return
+	end
 	if btn(4)==false and btn(5)==false then
 		btnreleased=true
 	end
@@ -76,6 +80,9 @@ end
 
 
 function update_won()	
+	if t < lockout then
+		return
+	end
 	if btn(4)==false and btn(5)==false then
 		btnreleased=true
 	end
