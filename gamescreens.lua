@@ -2,7 +2,7 @@
 function update_start()	
 	blinkt = blinkt+1
 	if btnp(4) or btnp(5) then
-		sfx(14,-1,0,15)
+		sfx(14,-1,0,15)			
 		mode="levelscreen"
 		startgame()
 	end
@@ -37,14 +37,14 @@ function draw_levelscreen()
 end
 	
 function startnewwave()
-	if wave <= 5 then
-		sfx(14,-1,0,15)
-	end
 	wave+=1
-	mode="levelscreen"
-	if wave > 5 then
-		mode="won"
+	if wave <= lastwave then
+		sfx(14,-1,0,15)
+		mode="levelscreen"
+	elseif wave > lastwave then
 		--music(-1)
+		music(2)
+		mode="won"		
 	end
 end
 
@@ -82,6 +82,7 @@ function update_won()
 	if btnreleased then
 		if btnp(4) or btnp(5) then
 			startgame()
+			music(0)
 			mode="start"
 			btnreleased=false
 		end

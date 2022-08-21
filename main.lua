@@ -7,6 +7,7 @@ function _init()
 	entype=1
 	wave=1
 	parts={}
+	lastwave=1
 end
 
 --drawing every frame (30 fps)
@@ -16,7 +17,7 @@ function _draw()
 	elseif mode=="start" then
 		-- star screen
 		draw_start()
-	elseif mode=="levelscreen" then		
+	elseif mode=="levelscreen" then			
 		draw_levelscreen()				
 	elseif mode=="over" then
 		-- game over
@@ -34,7 +35,7 @@ function _update()
 	elseif mode=="start" then		
 		update_start()
 	elseif mode=="levelscreen" then		
-		update_levelscreen()		
+		update_levelscreen()				
 	elseif mode=="over" then		
 		update_over()		
 	elseif mode=="won" then		
