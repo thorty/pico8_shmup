@@ -16,7 +16,7 @@ function startgame()
 	--shootanim on ship	
 	muzzle=4
 	
-	wave=4
+	wave=1
 	score=0
 	lives=2	
 	invul=0
@@ -98,9 +98,11 @@ function update_game()
 	ship.x+=ship.sx	
 	ship.y+=ship.sy	
 
-	--movieng enemies
+	--enemy moving and animation
 	for myen in all(enemies) do
-		myen.y+=myen.speed	
+		--moving enemies
+		--myen.y+=myen.speed	
+		doenmission(myen)
 
 		myen.aniframe+=myen.speed/2	
 		if flr(myen.aniframe)>#myen.ani then
