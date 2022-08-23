@@ -1,9 +1,10 @@
 --add enemies and random place
 function spawnwave()		
 	--nemiesmax=4
---	wave=5
-	sfx(7)
+	--	wave=5
+	sfx(7)	
 	if wave==1 then
+		attackrate=40
 		lvl = {
 			{0,1,1,1,1,1,1,1,1,0},
 			{0,1,1,1,1,1,1,1,1,0},
@@ -11,6 +12,7 @@ function spawnwave()
 			{0,1,1,1,1,1,1,1,1,0}
 		}
 	elseif wave==2 then
+		attackrate=10
 		lvl = {
 			{0,1,1,1,1,1,1,1,1,0},
 			{0,3,3,3,3,3,3,3,3,0},
@@ -18,14 +20,16 @@ function spawnwave()
 			{0,1,1,1,1,1,1,1,1,0}
 		}
 	elseif wave==3 then
-		lvl = {
+		attackrate=30
+		lvl = {			
 			{0,4,4,4,4,4,4,4,4,0},
 			{0,3,3,3,3,3,3,3,3,0},
 			{0,2,2,2,2,2,2,2,2,0},
 			{0,3,3,3,3,3,3,3,3,0}
 		}
 	elseif wave==4 then
-		lvl = {
+		attackrate=20
+		lvl = {			
 			{0,4,4,4,4,4,4,4,4,0},
 			{0,4,4,2,2,2,2,4,4,0},
 			{0,4,4,4,4,4,4,4,4,0},
@@ -34,8 +38,9 @@ function spawnwave()
 	elseif wave==5 then
 		--enemiesmax=1
 		--spawnen(5)	
+		attackrate=0
 		lvl = {
-			{0,0,0,5,0,0,5,0,0,0},			
+			{0,0,0,5,0,0,5,0,0,0}	
 		}			
 	end	
 	placeen(lvl)
@@ -130,10 +135,17 @@ function enemyatack()
 	if mode!="game" then
 		return
 	end
-	if t%30==0 then
-		local myen=rnd(enemies)	
+	if attackrate==0 then
+		return
+	end
+	if t%attackrate==0 then
+		local maxnum=min(10,#enemies) --10 oder der count wenn count<10
+		local myenindex = flr(rnd(maxnum))
+		myenindex = #enemies-myenindex
+
+		local myen=enemies[myenindex]
 		if myen.mission=="protec" then
-			myen.mission="attac"
+			myen.mission="attac"		
 		end
 	end
 end

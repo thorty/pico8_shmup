@@ -13,6 +13,7 @@ function startgame()
 	bulltimer=5
 	parts={}
 	gameovertime=30
+	attackrate=40
 	--shootanim on ship	
 	muzzle=4
 	
@@ -180,7 +181,7 @@ function update_game()
 	end
 
 
-	enemyatack()
+	
 	
 	animflame()
 
@@ -188,12 +189,13 @@ function update_game()
 
 	animatestars()
 	
+	enemyatack()
 
 	if mode=="game" and #enemies <=0 then
 		startnewwave()
 	end
 
-
+	
 end
 
 
