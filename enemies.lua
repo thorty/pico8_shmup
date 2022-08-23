@@ -2,6 +2,7 @@
 function spawnwave()		
 	--nemiesmax=4
 --	wave=5
+	sfx(7)
 	if wave==1 then
 		lvl = {
 			{0,1,1,1,1,1,1,1,1,0},
@@ -42,12 +43,12 @@ end
 
 
 --add enemies and random place
-function spawnen(entype,x,y)						
+function spawnen(entype,x,y,wait)						
 	local myen=make_spr()
 	myen.hp=2
 	myen.flash=0
-	myen.x=x	
-	myen.y=y-60
+	myen.x=x*2-45
+	myen.y=y-66
 	myen.posx=x
  	myen.posy=y
 	myen.speed=1
@@ -55,6 +56,8 @@ function spawnen(entype,x,y)
 	myen.spw=1
 	myen.sph=1
 	myen.mission="flyin"
+	myen.wait=wait
+
 	if entype==nil or entype==1 then
 		--krappler
 		myen.hp=2
@@ -91,7 +94,7 @@ function placeen(lvl)
 	for y=1,#lvl do
 		for x=1,10 do
 			if lvl[y][x] != 0 then
-				add(enemies, spawnen(lvl[y][x],x*12-6,y*12))
+				add(enemies, spawnen(lvl[y][x],x*12-6,y*12,x+8))
 			end
 		end
 	end
@@ -100,17 +103,39 @@ end
 function doenmission(myen)
  if myen.mission=="flyin" then
 	 -- flying in
-	myen.y+=myen.speed
-	if myen.y>=myen.posy then
-	 myen.mission="protec"
+	if myen.wait>0 then
+		myen.wait-=1
+		return
+	end
+	--myen.y+=myen.speed+1
+
+	--basic easing function for smoth animations
+	--x+=(targetx-x)/n
+	myen.x+=(myen.posx-myen.x)/9
+	myen.y+=(myen.posy-myen.y)/9
+
+	if abs(myen.posy-myen.y)<0.7 then
+		myen.y=myen.posy	 
+		myen.mission="protec"
 	end
  elseif myen.mission=="protec" then
  --staying
  elseif myen.mission=="attac" then
  --attac
+	myen.y+=1.7
  end
+end
 
-
+function enemyatack()
+	if mode!="game" then
+		return
+	end
+	if t%30==0 then
+		local myen=rnd(enemies)	
+		if myen.mission=="protec" then
+			myen.mission="attac"
+		end
+	end
 end
 
 

@@ -256,3 +256,12 @@ function make_spr()
 	myspr.colh=8
 	return myspr
 end
+
+function animflame()
+	if lives<=0 then
+		flamespr=flamespr+1
+		if flamespr>8 then
+			flamespr=5
+		end
+	end
+end

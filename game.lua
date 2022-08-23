@@ -1,5 +1,5 @@
 function startgame()	
-	music(1)
+	music(-1)
 	t=0
 	ship=make_spr()	
 	ship.sp=2
@@ -179,13 +179,10 @@ function update_game()
 		lockout=t+40
 	end
 
-	--anim flame
-	if lives<=0 then
-		flamespr=flamespr+1
-		if flamespr>8 then
-			flamespr=5
-		end
-	end
+
+	enemyatack()
+	
+	animflame()
 
 	move_bullets()
 
