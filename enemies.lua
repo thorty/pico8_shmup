@@ -139,7 +139,9 @@ function enemyatack()
 		return
 	end
 	if t%attackrate==0 then
-		local maxnum=min(10,#enemies) --10 oder der count wenn count<10
+		local frontlinecount = determfrontline()
+
+		local maxnum=min(frontlinecount,#enemies) --10 oder der count wenn count<10
 		local myenindex = flr(rnd(maxnum))
 		myenindex = #enemies-myenindex
 
@@ -148,6 +150,24 @@ function enemyatack()
 			myen.mission="attac"		
 		end
 	end
+end
+
+function determfrontline()
+	local enmaxy = 0
+	local frontlinecount = 0
+	-- get max y position from all enemies
+	for i=1,#enemies do
+		if enemies[i].y>enmaxy then
+			enmaxy = enemies[i].y
+		end
+	end
+	--count all with the same y position
+	for i=1,#enemies do
+		if enemies[i].y==enmaxy then
+			frontlinecount=frontlinecount+1
+		end
+	end
+	return frontlinecount
 end
 
 
