@@ -76,7 +76,8 @@ function spawnen(entype,x,y,wait)
 		myen.ani={37,38,39,40}
 		myen.sy=2.7
 		myen.sx=0
-		myen.entype=2		
+		myen.entype=2	
+			
 	elseif entype==3 then
 		--hotn
 		myen.hp=3
@@ -85,6 +86,7 @@ function spawnen(entype,x,y,wait)
 		myen.sy=2.7
 		myen.sx=0
 		myen.entype=3	
+
 	elseif entype==4 then
 		--ghost maybe boss
 		myen.hp=3
@@ -92,7 +94,8 @@ function spawnen(entype,x,y,wait)
 		myen.ani={48,49,50,51}
 		myen.sy=3
 		myen.sx=0
-		myen.entype=4		
+		myen.entype=4	
+		myen.shooter=true	
 	elseif entype==5 then	
 		myen.spw=2
 		myen.sph=2
@@ -138,7 +141,7 @@ function doenmission(myen)
  elseif myen.mission=="attac" then
  --attac
 	
-	if myen.entype == 1 or myen.entype == 4 then
+	if myen.entype == 1 then
 		myen.sx=sin(t/45)
 		-- when boarder go to center
 		if myen.x<32 then
@@ -181,8 +184,10 @@ function doenmission(myen)
 			myen.sy=2
 		end		
 	end
-
-
+	-- do not move type 4. he shoots
+	if myen.entype==4 then
+		return
+	end
 	move(myen)
  end
 end
@@ -206,10 +211,15 @@ function newattack()
 	myenindex = #enemies-myenindex
 	local myen=enemies[myenindex]
 	if myen==nil then return end
-	if myen.mission=="protec" then
-		myen.mission="attac"
-		myen.wait=30	
-		myen.shake=30	
+	if myen.mission=="protec" then		
+		if myen.entype != 4 then
+			myen.wait=30	
+			myen.shake=30
+			myen.mission="attac"
+		end
+		if myen.entype == 4 then
+			add_enbullet(myen)
+		end	
 	end
 end
 

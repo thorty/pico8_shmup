@@ -10,6 +10,7 @@ function startgame()
 	flamespr=5
 	bullets={}
 	shwaves={}
+	enbullets={}
 	bulltimer=5
 	parts={}
 	gameovertime=30
@@ -128,8 +129,8 @@ function update_game()
 			end
 		end
 	end
-		
-	
+
+
 	--collision ship x enemies
 	if invul<=0 then
 		for myen in all(enemies) do
@@ -148,6 +149,24 @@ function update_game()
 		end
 	else
 		invul-=1
+	end
+
+	-- colliosion enbullet and ship
+	if invul<=0 then
+		for enbul in all(enbullets) do
+			if col(enbul, ship) then
+				lives-=1
+				sfx(1)
+				invul=60
+				--del(enemies, myen)
+				if lives<=0 then
+					explode(ship.x+4,ship.y+4, true)
+				else
+					explode(ship.x+4,ship.y+4, false)
+					
+				end
+			end
+		end
 	end
 
 
@@ -210,6 +229,7 @@ function draw_game()
 		pal()--reset default colers
 	end	
 	drwallspr(bullets)	
+	drwallspr(enbullets)	
 	
 	--draw muzzle
 	if muzzle>0 then

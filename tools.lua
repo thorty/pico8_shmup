@@ -13,7 +13,7 @@ function draw_starfield()
 	end
 end
 
-function atestars()
+function animatestars()
 
 	for i=1,#stars do
 		local sy=stars[i].y
