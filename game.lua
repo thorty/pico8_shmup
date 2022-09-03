@@ -103,13 +103,8 @@ function update_game()
 	for myen in all(enemies) do
 
 		doenmission(myen)
-
-		myen.aniframe+=myen.anispeed/2	
-		if flr(myen.aniframe)>#myen.ani then
-			myen.aniframe=1
-		end
-		myen.sp=myen.ani[flr(myen.aniframe)]
-
+		anim_sprite(myen, 0.5)
+		
 		if myen.mission !="flyin" then
 			if myen.y > 130 or myen.x > 130 or myen.x < -5 then
 				del(enemies,myen)

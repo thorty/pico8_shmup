@@ -13,7 +13,7 @@ function draw_starfield()
 	end
 end
 
-function animatestars()
+function atestars()
 
 	for i=1,#stars do
 		local sy=stars[i].y
@@ -278,4 +278,12 @@ end
 function move(obj)
 	obj.y+=obj.sy
 	obj.x+=obj.sx
+end
+
+function anim_sprite(obj, speed)
+	obj.aniframe+=1	
+	if flr(obj.aniframe)>#obj.ani then
+		obj.aniframe=1
+	end
+	obj.sp=obj.ani[flr(obj.aniframe)]	
 end
