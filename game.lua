@@ -2,7 +2,7 @@ function startgame()
 	music(-1)
 	t=0
 	ship=make_spr()	
-	ship.sp=2
+	ship.sp=3
 	ship.y=70
 	ship.x=60
 	ship.sx=0
@@ -17,7 +17,7 @@ function startgame()
 	--shootanim on ship	
 	muzzle=4
 	
-	wave=1
+	wave=4
 	score=0
 	lives=2	
 	invul=0
@@ -101,20 +101,21 @@ function update_game()
 
 	--enemy moving and animation
 	for myen in all(enemies) do
-		--moving enemies
-		--myen.y+=myen.speed	
+
 		doenmission(myen)
 
-		myen.aniframe+=myen.speed/2	
+		myen.aniframe+=myen.anispeed/2	
 		if flr(myen.aniframe)>#myen.ani then
 			myen.aniframe=1
 		end
 		myen.sp=myen.ani[flr(myen.aniframe)]
 
-		if myen.y > 130 then
-			del(enemies,myen)
+		if myen.mission !="flyin" then
+			if myen.y > 130 or myen.x > 130 or myen.x < -5 then
+				del(enemies,myen)
+			end
 		end
-	end	
+	end
 	
 	--collision enemie x bullets
 	for myen in all(enemies) do
@@ -127,10 +128,7 @@ function update_game()
 				sfx(3)
 				myen.flash=5
 				if myen.hp<=0 then
-					del(enemies, myen)
-					score+=100
-					sfx(2)
-					explode(myen.x+4,myen.y+4)
+					killen(myen)
 				end				
 			end
 		end
@@ -157,12 +155,6 @@ function update_game()
 		invul-=1
 	end
 
-	-- check if enemy is out of screen then respawn
-	--for myen in all(enemies) do
-	--	if myen.y>115 then
-	--		myen.y=-4
-	--	end
-	--end
 
 -- check if enemy is out of screen then delete
 	for myen in all(enemies) do
@@ -189,7 +181,7 @@ function update_game()
 
 	animatestars()
 	
-	enemyatack()
+	enemyatacktimer()
 
 	if mode=="game" and #enemies <=0 then
 		startnewwave()
@@ -219,7 +211,7 @@ function draw_game()
 			myen.flash-=1
 			flashspr()
 		end
-		drwspr(myen)	
+		drawspr(myen)	
 		pal()--reset default colers
 	end	
 	drwallspr(bullets)	

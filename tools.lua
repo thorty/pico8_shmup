@@ -61,8 +61,17 @@ function drwallspr(sprs)
 	end
 end
 
-function drwspr(sp)	
-		spr(sp.sp,sp.x,sp.y,sp.spw,sp.sph)
+function drawspr(sp)	
+	local spx=sp.x
+	local spy=sp.y
+	if sp.shake>0 then
+		sp.shake-=1
+		if t%4<2 then
+			spx+=rnd(1)+-1
+		end
+		--spx+=sin(t/5)
+	end	
+	spr(sp.sp,spx,spy,sp.spw,sp.sph)
 end
 
 function flashspr()
@@ -264,4 +273,9 @@ function animflame()
 			flamespr=5
 		end
 	end
+end
+
+function move(obj)
+	obj.y+=obj.sy
+	obj.x+=obj.sx
 end

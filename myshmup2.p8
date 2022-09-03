@@ -9,8 +9,9 @@ __lua__
 #include bullets.lua
 
 --todo:
+-- counter how many enemies are on base --> wintarget not more then 10 -- show this on screen
+-- 1ß wave to come through the game
 -- nicer screens
--- multiple ebemies
 -- enemie bullets
 -- better music (opt)
 
