@@ -19,11 +19,8 @@ end
 
 function anim_bullets()
 	for i=1,#bullets do
-		local bu = bullets[i] 
-		bu.aniframe+=1	
-		if flr(bu.aniframe)>#bu.ani then
-			bu.aniframe=1
-		end
-		bu.sp=bu.ani[flr(bu.aniframe)]	
+		local bu = bullets[i] 		
+		anim_sprite(bu,1)
 	end
 end
+
