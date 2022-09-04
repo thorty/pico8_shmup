@@ -226,7 +226,7 @@ function draw_game()
 			flashspr()
 		end
 		drawspr(myen)	
-		pal()--reset default colers
+		pal()--reset default colors
 	end	
 	drwallspr(bullets)	
 	drwallspr(enbullets)	
