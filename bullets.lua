@@ -40,7 +40,7 @@ end
 function add_enbullet(en)
 	local bul=make_spr()
 	bul.x=en.x+1.5
-	bul.y=en.y-4
+	bul.y=en.y+4
 	bul.sp=16			
 	bul.colw=2
 	bul.colh=2

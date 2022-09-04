@@ -3,7 +3,7 @@ function spawnwave()
 	--nemiesmax=4
 	--	wave=5
 	sfx(7)	
-	attackrate=40
+	attackrate=30
 	if wave==1 then		
 		lvl = {
 			{0,1,1,1,1,1,1,1,1,0},
@@ -95,7 +95,7 @@ function spawnen(entype,x,y,wait)
 		myen.sy=3
 		myen.sx=0
 		myen.entype=4	
-		myen.shooter=true	
+		myen.shooter=true			
 	elseif entype==5 then	
 		myen.spw=2
 		myen.sph=2
@@ -202,6 +202,7 @@ function enemyatacktimer()
 	if t%attackrate==0 then
 		newattack()
 	end
+
 end
 
 function newattack()
@@ -219,6 +220,8 @@ function newattack()
 		end
 		if myen.entype == 4 then
 			add_enbullet(myen)
+			sfx(8)
+			myen.flash=4
 		end	
 	end
 end
@@ -237,6 +240,9 @@ function determfrontline()
 		if enemies[i].y==enmaxy then
 			frontlinecount=frontlinecount+1
 		end
+	end
+	if frontlinecount<4 then
+		frontlinecount+=5
 	end
 	return frontlinecount
 end
